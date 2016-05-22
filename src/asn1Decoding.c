@@ -143,12 +143,20 @@ main (int argc, char *argv[])
     }
 
   inputFileAsnName = (char *) malloc (strlen (argv[optind]) + 1);
-  strcpy (inputFileAsnName, argv[optind]);
-
   inputFileDerName = (char *) malloc (strlen (argv[optind + 1]) + 1);
-  strcpy (inputFileDerName, argv[optind + 1]);
-
   typeName = (char *) malloc (strlen (argv[optind + 2]) + 1);
+
+  if (!(inputFileAsnName && inputFileDerName && typeName))
+    {
+      fprintf (stderr, "allocation failed\n");
+      free (inputFileAsnName);
+      free (inputFileDerName);
+      free (typeName);
+      exit (1);
+    }
+
+  strcpy (inputFileAsnName, argv[optind]);
+  strcpy (inputFileDerName, argv[optind + 1]);
   strcpy (typeName, argv[optind + 2]);
 
   asn1_result =
